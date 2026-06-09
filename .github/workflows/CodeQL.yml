@@ -1,0 +1,34 @@
+name: CodeQL
+
+# Static Application Security Testing (SAST): CodeQL reads the source code and
+# looks for security vulnerabilities and bug patterns. Results appear under the
+# repository's Security tab -> Code scanning alerts.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: "23 5 * * 1"   # also run weekly to catch newly-published detections
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyze (Python)
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write   # required to upload CodeQL results
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
