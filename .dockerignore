@@ -1,0 +1,10 @@
+.git
+.github
+tests
+**/__pycache__
+*.pyc
+*.pyo
+README.md
+requirements-dev.txt
+.gitignore
+.dockerignore
